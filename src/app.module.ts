@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
-import { envValidationSchema } from './config/env.validation';
+import { TransactionModule } from './modules/transactions/transaction.module';
+import { BetModule } from './modules/bets/bet.module';
+import { UserBetModule } from './modules/user-bets/user-bet.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      validationSchema: envValidationSchema,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -25,8 +26,11 @@ import { envValidationSchema } from './config/env.validation';
       }),
       inject: [ConfigService],
     }),
-    AuthModule,
     UserModule,
+    TransactionModule,
+    BetModule,
+    UserBetModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
