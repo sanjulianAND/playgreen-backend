@@ -30,3 +30,53 @@ PLAYGREEN Sports API is a sports betting application developed with the [Nest](h
 
 ```bash
 $ npm install
+
+## development
+$ npm run start
+
+## watch mode
+$ npm run start:dev
+
+## production mode
+$ npm run start:prod
+
+## Configuration
+Environment Variables
+Set the following variables in the .env file:
+
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=root
+DB_DATABASE=playgreen_sports
+JWT_SECRET=JWT_SECRET
+JWT_EXPIRATION=3600
+
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "root",
+  "database": "playgreen_sports",
+  "entities": ["dist/**/*.entity{.ts,.js}"],
+  "synchronize": true
+}
+
+Implemented Endpoints
+User Endpoints / Permissions:
+Place a bet on a specific event
+Deposit money in its account (create corresponding transaction)
+Withdraw money (create corresponding transaction)
+Update user data
+Request its balance (calculate balance based on transactions)
+Get its transactions (can be filtered by type deposit, withdraw, bet, winning)
+Admin Endpoints / Permissions:
+List all of the bets (can be filtered by specific event or sport)
+List all of the user transactions (can be also filtered by specific user and/or category)
+Request user balance
+Change a bet status (active / cancelled)
+Block a specific user (user state => active / blocked) (can’t block other admins)
+Settle bets results (won / lost)
+This settlement should trigger payments for users that have a placed bet for the winning option in case of a won
+Update user data
