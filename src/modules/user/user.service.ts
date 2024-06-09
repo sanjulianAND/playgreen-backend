@@ -22,6 +22,18 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
+  async update(
+    id: number,
+    updateUserDto: CreateUserDto,
+  ): Promise<User | undefined> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      return undefined;
+    }
+    Object.assign(user, updateUserDto);
+    return await this.userRepository.save(user);
+  }
+
   async findOneById(id: number): Promise<User | undefined> {
     return (await this.userRepository.findOne({ where: { id } })) || undefined;
   }

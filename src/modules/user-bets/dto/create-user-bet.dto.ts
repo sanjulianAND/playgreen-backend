@@ -5,12 +5,12 @@ export class CreateUserBetDto {
   @ApiProperty({ description: 'The ID of the user placing the bet' })
   @IsInt()
   @IsNotEmpty()
-  userId: number;
+  user_id: number;
 
   @ApiProperty({ description: 'The ID of the bet' })
   @IsInt()
   @IsNotEmpty()
-  betId: number;
+  bet_id: number;
 
   @ApiProperty({ description: 'The odd of the bet' })
   @IsDecimal()

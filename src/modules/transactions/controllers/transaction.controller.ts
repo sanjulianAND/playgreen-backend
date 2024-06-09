@@ -4,6 +4,7 @@ import {
   Param,
   Post,
   Body,
+  Query,
   UseGuards,
   Logger,
 } from '@nestjs/common';
@@ -32,7 +33,7 @@ export class TransactionController {
   @Post()
   async create(@Body() createTransactionDto: CreateTransactionDto) {
     this.logger.log(
-      `Creating transaction for user ID: ${createTransactionDto.userId}`,
+      `Creating transaction for user ID: ${createTransactionDto.user_id}`,
     );
     const transaction =
       await this.transactionService.create(createTransactionDto);
@@ -67,5 +68,16 @@ export class TransactionController {
       this.logger.warn(`Transaction not found with ID: ${id}`);
     }
     return transaction;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get transactions by type' })
+  @ApiResponse({ status: 200, description: 'Transactions retrieved' })
+  @Get()
+  async findByType(@Query('type') type: string) {
+    this.logger.log(`Fetching transactions of type: ${type}`);
+    const transactions = await this.transactionService.findByType(type);
+    return transactions;
   }
 }

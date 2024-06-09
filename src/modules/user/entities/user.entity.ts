@@ -7,8 +7,10 @@ import {
   DeleteDateColumn,
   BeforeInsert,
   BeforeUpdate,
+  OneToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { UserBet } from '../../user-bets/entities/user-bet.entity';
 
 @Entity('users')
 export class User {
@@ -19,10 +21,10 @@ export class User {
   role: string;
 
   @Column({ length: 255 })
-  firstName: string;
+  first_name: string;
 
   @Column({ length: 255 })
-  lastName: string;
+  last_name: string;
 
   @Column({ length: 255 })
   phone: string;
@@ -43,10 +45,10 @@ export class User {
   gender: string;
 
   @Column()
-  birthDate: Date;
+  birth_date: Date;
 
   @Column()
-  countryId: number;
+  country_id: number;
 
   @Column({ length: 255 })
   city: string;
@@ -55,22 +57,22 @@ export class User {
   category: string; // Definir un valor predeterminado aquí
 
   @Column({ length: 255, nullable: true })
-  documentId: string;
+  document_id: string;
 
   @Column({ length: 255 })
-  userState: string;
+  user_state: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  created_at: Date;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updated_at: Date;
 
   @Column({ default: false })
   deleted: boolean;
 
-  @DeleteDateColumn()
-  deletedAt: Date;
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deleted_at: Date;
 
   @BeforeInsert()
   @BeforeUpdate()

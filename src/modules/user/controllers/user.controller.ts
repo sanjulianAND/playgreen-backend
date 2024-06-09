@@ -3,11 +3,13 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Body,
   UseGuards,
   Logger,
 } from '@nestjs/common';
 import { UserService } from '../user.service';
+import { TransactionService } from '../../transactions/transaction.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import {
@@ -22,7 +24,10 @@ import {
 export class UserController {
   private readonly logger = new Logger(UserController.name);
 
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly transactionService: TransactionService,
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
@@ -51,5 +56,34 @@ export class UserController {
     const user = await this.userService.create(createUserDto);
     this.logger.log(`User created with ID: ${user.id}`);
     return this.userService.sanitizeUser(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update user data' })
+  @ApiResponse({ status: 200, description: 'User updated' })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  @Put(':id')
+  async update(@Param('id') id: number, @Body() updateUserDto: CreateUserDto) {
+    this.logger.log(`Updating user with ID: ${id}`);
+    const user = await this.userService.update(id, updateUserDto);
+    if (user) {
+      this.logger.log(`User updated with ID: ${id}`);
+    } else {
+      this.logger.warn(`User not found with ID: ${id}`);
+    }
+    return user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get user balance' })
+  @ApiResponse({ status: 200, description: 'User balance retrieved' })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  @Get(':id/balance')
+  async getBalance(@Param('id') id: number) {
+    this.logger.log(`Fetching balance for user with ID: ${id}`);
+    const balance = await this.transactionService.calculateBalance(id);
+    return { balance };
   }
 }

@@ -14,6 +14,12 @@ export class TransactionService {
   async create(
     createTransactionDto: CreateTransactionDto,
   ): Promise<Transaction> {
+    if (
+      ['bet', 'winning'].includes(createTransactionDto.category) &&
+      !createTransactionDto.user_bet_id
+    ) {
+      throw new Error('user_bet_id is required for bet and winning categories');
+    }
     const transaction = this.transactionRepository.create(createTransactionDto);
     return await this.transactionRepository.save(transaction);
   }
@@ -28,9 +34,28 @@ export class TransactionService {
     );
   }
 
-  async findByUserId(userId: number): Promise<Transaction[]> {
-    return await this.transactionRepository.find({
-      where: { user: { id: userId } },
+  async calculateBalance(user_id: number): Promise<number> {
+    const transactions = await this.transactionRepository.find({
+      where: { user_id },
     });
+    let balance = 0;
+    for (const transaction of transactions) {
+      if (
+        transaction.category === 'deposit' ||
+        transaction.category === 'winning'
+      ) {
+        balance += Number(transaction.amount);
+      } else if (
+        transaction.category === 'withdraw' ||
+        transaction.category === 'bet'
+      ) {
+        balance -= Number(transaction.amount);
+      }
+    }
+    return balance;
+  }
+
+  async findByType(type: string): Promise<Transaction[]> {
+    return await this.transactionRepository.find({ where: { category: type } });
   }
 }

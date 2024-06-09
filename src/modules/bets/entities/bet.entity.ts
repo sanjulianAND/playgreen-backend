@@ -5,7 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { UserBet } from '../../user-bets/entities/user-bet.entity';
 
 @Entity('bets')
 export class Bet {
@@ -13,7 +15,7 @@ export class Bet {
   id: number;
 
   @Column({ length: 255 })
-  betOption: string;
+  bet_option: string;
 
   @Column({ length: 255 })
   sport: string;
@@ -25,7 +27,7 @@ export class Bet {
   name: string;
 
   @Column()
-  eventId: number;
+  event_id: number;
 
   @Column('decimal')
   odd: number;
@@ -33,15 +35,15 @@ export class Bet {
   @Column({ length: 50, nullable: true })
   result: string; // won, lost
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  created_at: Date;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updated_at: Date;
 
   @Column({ default: false })
   deleted: boolean;
 
-  @DeleteDateColumn()
-  deletedAt: Date;
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deleted_at: Date;
 }
