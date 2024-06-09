@@ -58,4 +58,14 @@ export class TransactionService {
   async findByType(type: string): Promise<Transaction[]> {
     return await this.transactionRepository.find({ where: { category: type } });
   }
+
+  async findAllFiltered(
+    user_id?: number,
+    category?: string,
+  ): Promise<Transaction[]> {
+    const where: any = {};
+    if (user_id) where.user_id = user_id;
+    if (category) where.category = category;
+    return await this.transactionRepository.find({ where });
+  }
 }

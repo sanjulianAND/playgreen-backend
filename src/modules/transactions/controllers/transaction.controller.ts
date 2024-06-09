@@ -17,6 +17,9 @@ import {
   ApiResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
+import { RolesGuard } from 'src/modules/auth/guards/roles.guard';
+import { Role } from 'src/modules/auth/role.enum';
+import { Roles } from 'src/modules/auth/roles.decorator';
 
 @ApiTags('transactions')
 @Controller('transactions')
@@ -50,6 +53,28 @@ export class TransactionController {
     this.logger.log('Fetching all transactions');
     const transactions = await this.transactionService.findAll();
     this.logger.log(`Total transactions found: ${transactions.length}`);
+    return transactions;
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Get all transactions filtered by user or category',
+  })
+  @ApiResponse({ status: 200, description: 'Transactions retrieved' })
+  @Get('filter')
+  async findAllFiltered(
+    @Query('user_id') user_id?: number,
+    @Query('category') category?: string,
+  ) {
+    this.logger.log(
+      `Fetching transactions filtered by user_id: ${user_id} or category: ${category}`,
+    );
+    const transactions = await this.transactionService.findAllFiltered(
+      user_id,
+      category,
+    );
     return transactions;
   }
 
