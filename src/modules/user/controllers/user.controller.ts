@@ -61,6 +61,26 @@ export class UserController {
     return this.userService.sanitizeUser(user);
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Block a user' })
+  @ApiResponse({ status: 200, description: 'User blocked' })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  @ApiResponse({ status: 403, description: 'Cannot block an admin user' })
+  @Put(':id/block')
+  async blockUser(@Param('id') id: number) {
+    this.logger.log(`Blocking user with ID: ${id}`);
+    try {
+      const user = await this.userService.blockUser(id);
+      this.logger.log(`User blocked with ID: ${id}`);
+      return user;
+    } catch (error) {
+      this.logger.warn(`Failed to block user with ID: ${id}`);
+      throw error;
+    }
+  }
+
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update user data' })
