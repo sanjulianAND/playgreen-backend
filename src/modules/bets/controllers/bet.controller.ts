@@ -4,12 +4,14 @@ import {
   Param,
   Post,
   Body,
+  Put,
   UseGuards,
   Logger,
   Query,
 } from '@nestjs/common';
 import { BetService } from '../bet.service';
 import { CreateBetDto } from '../dto/create-bet.dto';
+import { UpdateBetStatusDto } from '../dto/update-bet-status.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import {
   ApiTags,
@@ -20,6 +22,7 @@ import {
 import { RolesGuard } from 'src/modules/auth/guards/roles.guard';
 import { Roles } from 'src/modules/auth/roles.decorator';
 import { Role } from 'src/modules/auth/role.enum';
+import { SettleBetDto } from '../dto/settle-bet.dto';
 
 @ApiTags('bets')
 @Controller('bets')
@@ -85,5 +88,47 @@ export class BetController {
       this.logger.warn(`Bet not found with ID: ${id}`);
     }
     return bet;
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update bet status' })
+  @ApiResponse({ status: 200, description: 'Bet status updated' })
+  @ApiResponse({ status: 404, description: 'Bet not found' })
+  @Put(':id/status')
+  async updateStatus(
+    @Param('id') id: number,
+    @Body() updateBetStatusDto: UpdateBetStatusDto,
+  ) {
+    this.logger.log(`Updating status for bet with ID: ${id}`);
+    const bet = await this.betService.updateStatus(id, updateBetStatusDto);
+    if (bet) {
+      this.logger.log(`Bet status updated for ID: ${id}`);
+    } else {
+      this.logger.warn(`Bet not found with ID: ${id}`);
+    }
+    return bet;
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Settle bet results and trigger payments for winners',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Bet settled and payments triggered',
+  })
+  @ApiResponse({ status: 404, description: 'Bet not found' })
+  @Put('settle')
+  async settleBet(@Body() settleBetDto: SettleBetDto) {
+    this.logger.log(
+      `Settling bet with ID: ${settleBetDto.bet_id} as ${settleBetDto.result}`,
+    );
+    const result = await this.betService.settleBet(settleBetDto);
+    this.logger.log(`Bet settled with ID: ${settleBetDto.bet_id}`);
+    return result;
   }
 }
