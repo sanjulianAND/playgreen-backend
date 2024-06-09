@@ -1,0 +1,639 @@
+{
+	"info": {
+		"_postman_id": "7dfc0c8c-0f6e-434b-9b01-41aa9fd500a2",
+		"name": "PlayGreen",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36192509"
+	},
+	"item": [
+		{
+			"name": "User endpoints",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"role\": \"user\",\r\n  \"first_name\": \"user\",\r\n  \"last_name\": \"user\",\r\n  \"email\": \"user@example.com\",\r\n  \"username\": \"user\",\r\n  \"password\": \"user123.\",\r\n  \"address\": \"Cra 789456\",\r\n  \"phone\": \"3122222223\",\r\n  \"gender\": \"male\",\r\n  \"birth_date\": \"1995-01-01\",\r\n  \"country_id\": 1,\r\n  \"city\": \"Popayán\",\r\n  \"category\": \"defaultCategory\",\r\n  \"document_id\": \"123456789\",\r\n  \"user_state\": \"active\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"role\": \"user\",\r\n  \"first_name\": \"usuario\",\r\n  \"last_name\": \"usuario\",\r\n  \"email\": \"usuario@example.com\",\r\n  \"username\": \"usuario\",\r\n  \"password\": \"user123.\",\r\n  \"address\": \"Cra 789456\",\r\n  \"phone\": \"3122222223\",\r\n  \"gender\": \"male\",\r\n  \"birth_date\": \"1995-01-01\",\r\n  \"country_id\": 1,\r\n  \"city\": \"Popayán\",\r\n  \"category\": \"defaultCategory\",\r\n  \"document_id\": \"123456789\",\r\n  \"user_state\": \"active\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/users/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Bet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bet_option\": \"Colombia wins\",\r\n  \"sport\": \"Football\",\r\n  \"status\": \"active\",\r\n  \"name\": \"Copa América - Final - Argentina vs Colombia\",\r\n  \"event_id\": 1,\r\n  \"odd\": 2.5,\r\n  \"result\": null\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/bets",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"bets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deposit money in its account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": 1,\r\n  \"amount\": 100,\r\n  \"category\": \"deposit\",\r\n  \"status\": \"completed\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/transactions",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Place a bet on a specific event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": 1,\r\n  \"bet_id\": 1,\r\n  \"odd\": 2.5,\r\n  \"amount\": 50,\r\n  \"state\": \"open\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user-bets",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user-bets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Withdraw money",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": 1,\r\n  \"amount\": 50,\r\n  \"category\": \"withdraw\",\r\n  \"status\": \"completed\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/transactions",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request its balance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/users/:id/balance",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"balance"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get its transactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/transactions?type=deposit",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "deposit"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin endpoints",
+			"item": [
+				{
+					"name": "List all of the bets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/bets/filter?event_id=123&sport=Football",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"bets",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "event_id",
+									"value": "123"
+								},
+								{
+									"key": "sport",
+									"value": "Football"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all of the user transactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/transactions/filter?user_id=1&category=deposit",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"transactions",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "1"
+								},
+								{
+									"key": "category",
+									"value": "deposit"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request user balance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/users/:id/users_balance",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"users_balance"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Changing the Status of a Bet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": \"cancelled\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/bets/:id/status",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"bets",
+								":id",
+								"status"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Block a specific user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/users/:id/block",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"block"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Settled bets results",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bet_id\": 1,\r\n  \"result\": \"won\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/bets/settle",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"bets",
+								"settle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Admin",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"role\": \"admin\",\r\n  \"first_name\": \"admin\",\r\n  \"last_name\": \"adminn\",\r\n  \"email\": \"admin@example.com\",\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin123.\",\r\n  \"address\": \"Cra 789456\",\r\n  \"phone\": \"3122222222\",\r\n  \"gender\": \"male\",\r\n  \"birth_date\": \"1990-01-01\",\r\n  \"country_id\": 1,\r\n  \"city\": \"Popayán\",\r\n  \"category\": \"defaultCategory\",\r\n  \"document_id\": \"123456789\",\r\n  \"user_state\": \"active\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"role\": \"administrador\",\r\n  \"first_name\": \"administrador\",\r\n  \"last_name\": \"administrador\",\r\n  \"email\": \"administrador@example.com\",\r\n  \"username\": \"administrador\",\r\n  \"password\": \"admin123.\",\r\n  \"address\": \"Cra 789456\",\r\n  \"phone\": \"3122222222\",\r\n  \"gender\": \"male\",\r\n  \"birth_date\": \"1990-01-01\",\r\n  \"country_id\": 1,\r\n  \"city\": \"Popayán\",\r\n  \"category\": \"defaultCategory\",\r\n  \"document_id\": \"123456789\",\r\n  \"user_state\": \"active\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/users/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/auth/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
