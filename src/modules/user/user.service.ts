@@ -29,10 +29,18 @@ export class UserService {
   async update(
     id: number,
     updateUserDto: CreateUserDto,
+    currentUser: User,
   ): Promise<User | undefined> {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);
+    }
+    if (
+      user.role === 'admin' &&
+      currentUser.role === 'admin' &&
+      currentUser.id !== id
+    ) {
+      throw new ForbiddenException('Cannot update another admin user');
     }
     Object.assign(user, updateUserDto);
     return await this.userRepository.save(user);
