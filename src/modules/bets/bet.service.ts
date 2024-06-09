@@ -27,4 +27,11 @@ export class BetService {
   async findBySport(sport: string): Promise<Bet[]> {
     return await this.betRepository.find({ where: { sport } });
   }
+
+  async findAllFiltered(event_id?: number, sport?: string): Promise<Bet[]> {
+    const where: any = {};
+    if (event_id) where.event_id = event_id;
+    if (sport) where.sport = sport;
+    return await this.betRepository.find({ where });
+  }
 }

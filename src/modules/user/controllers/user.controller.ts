@@ -18,6 +18,9 @@ import {
   ApiResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
+import { RolesGuard } from 'src/modules/auth/guards/roles.guard';
+import { Role } from 'src/modules/auth/role.enum';
+import { Roles } from 'src/modules/auth/roles.decorator';
 
 @ApiTags('users')
 @Controller('users')
@@ -73,6 +76,19 @@ export class UserController {
       this.logger.warn(`User not found with ID: ${id}`);
     }
     return user;
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get balance of a user' })
+  @ApiResponse({ status: 200, description: 'User balance retrieved' })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  @Get(':id/users_balance')
+  async getUserBalance(@Param('id') id: number) {
+    this.logger.log(`Fetching balance for user with ID: ${id}`);
+    const balance = await this.transactionService.calculateBalance(id);
+    return { balance };
   }
 
   @UseGuards(JwtAuthGuard)
