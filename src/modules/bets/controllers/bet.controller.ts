@@ -31,7 +31,7 @@ export class BetController {
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @Post()
   async create(@Body() createBetDto: CreateBetDto) {
-    this.logger.log(`Creating bet with event ID: ${createBetDto.eventId}`);
+    this.logger.log(`Creating bet with event ID: ${createBetDto.event_id}`);
     const bet = await this.betService.create(createBetDto);
     this.logger.log(`Bet created with ID: ${bet.id}`);
     return bet;

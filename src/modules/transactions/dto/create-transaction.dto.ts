@@ -11,7 +11,7 @@ export class CreateTransactionDto {
   @ApiProperty({ description: 'The ID of the user making the transaction' })
   @IsInt()
   @IsNotEmpty()
-  userId: number;
+  user_id: number;
 
   @ApiProperty({ description: 'The amount of the transaction' })
   @IsDecimal()
@@ -37,5 +37,5 @@ export class CreateTransactionDto {
   })
   @IsInt()
   @IsOptional()
-  userBetId?: number; // if bet or winning
+  user_bet_id?: number; // if bet or winning
 }

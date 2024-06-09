@@ -11,7 +11,7 @@ export class CreateBetDto {
   @ApiProperty({ description: 'The bet option' })
   @IsString()
   @IsNotEmpty()
-  betOption: string;
+  bet_option: string;
 
   @ApiProperty({ description: 'The sport of the bet' })
   @IsString()
@@ -31,7 +31,7 @@ export class CreateBetDto {
   @ApiProperty({ description: 'The event ID of the bet' })
   @IsInt()
   @IsNotEmpty()
-  eventId: number;
+  event_id: number;
 
   @ApiProperty({ description: 'The odd of the bet' })
   @IsDecimal()

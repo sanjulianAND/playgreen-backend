@@ -16,13 +16,11 @@ export class UserBet {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @Column({ name: 'user_id', type: 'int' })
+  user_id: number;
 
-  @ManyToOne(() => Bet)
-  @JoinColumn({ name: 'bet_id' })
-  bet: Bet;
+  @Column({ name: 'bet_id', type: 'int' })
+  bet_id: number;
 
   @Column('decimal')
   odd: number;
@@ -33,15 +31,15 @@ export class UserBet {
   @Column({ length: 50 })
   state: string; // open, won, lost
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  created_at: Date;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updated_at: Date;
 
   @Column({ default: false })
   deleted: boolean;
 
-  @DeleteDateColumn()
-  deletedAt: Date;
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deleted_at: Date;
 }

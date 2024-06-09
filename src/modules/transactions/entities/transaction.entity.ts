@@ -5,41 +5,37 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  ManyToOne,
-  JoinColumn,
 } from 'typeorm';
-import { User } from '../../user/entities/user.entity';
 
 @Entity('transactions')
 export class Transaction {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @Column({ name: 'user_id', type: 'int' })
+  user_id: number;
 
   @Column('decimal')
   amount: number;
 
-  @Column()
+  @Column({ length: 50 })
   category: string; // deposit, withdraw, bet, winning
 
-  @Column()
+  @Column({ length: 50 })
   status: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @Column({ name: 'user_bet_id', type: 'int', nullable: true })
+  user_bet_id?: number;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  created_at: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updated_at: Date;
 
   @Column({ default: false })
   deleted: boolean;
 
-  @DeleteDateColumn()
-  deletedAt: Date;
-
-  @Column({ nullable: true })
-  userBetId: number; // if bet or winning
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deleted_at: Date;
 }

@@ -17,12 +17,12 @@ export class CreateUserDto {
   @ApiProperty({ description: 'The first name of the user' })
   @IsString()
   @IsNotEmpty()
-  firstName: string;
+  first_name: string;
 
   @ApiProperty({ description: 'The last name of the user' })
   @IsString()
   @IsNotEmpty()
-  lastName: string;
+  last_name: string;
 
   @ApiProperty({ description: 'The phone number of the user' })
   @IsString()
@@ -57,12 +57,12 @@ export class CreateUserDto {
   @ApiProperty({ description: 'The birth date of the user' })
   @IsDate()
   @IsNotEmpty()
-  birthDate: Date;
+  birth_date: Date;
 
   @ApiProperty({ description: 'The country ID of the user' })
   @IsInt()
   @IsNotEmpty()
-  countryId: number;
+  country_id: number;
 
   @ApiProperty({ description: 'The city of the user' })
   @IsString()
@@ -77,10 +77,10 @@ export class CreateUserDto {
   @ApiProperty({ description: 'The document ID of the user', required: false })
   @IsString()
   @IsOptional()
-  documentId?: string;
+  document_id?: string;
 
   @ApiProperty({ description: 'The state of the user' })
   @IsString()
   @IsNotEmpty()
-  userState: string;
+  user_state: string;
 }

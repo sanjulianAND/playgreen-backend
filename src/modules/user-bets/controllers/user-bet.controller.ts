@@ -31,9 +31,7 @@ export class UserBetController {
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @Post()
   async create(@Body() createUserBetDto: CreateUserBetDto) {
-    this.logger.log(
-      `Creating user bet with user ID: ${createUserBetDto.userId}`,
-    );
+    this.logger.log(`Creating user bet with user ID: ${createUserBetDto}`);
     const userBet = await this.userBetService.create(createUserBetDto);
     this.logger.log(`User bet created with ID: ${userBet.id}`);
     return userBet;
