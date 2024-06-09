@@ -7,6 +7,7 @@ import {
   Body,
   UseGuards,
   Logger,
+  Request,
 } from '@nestjs/common';
 import { UserService } from '../user.service';
 import { TransactionService } from '../../transactions/transaction.service';
@@ -86,10 +87,15 @@ export class UserController {
   @ApiOperation({ summary: 'Update user data' })
   @ApiResponse({ status: 200, description: 'User updated' })
   @ApiResponse({ status: 404, description: 'User not found' })
+  @ApiResponse({ status: 403, description: 'Cannot update another admin user' })
   @Put(':id')
-  async update(@Param('id') id: number, @Body() updateUserDto: CreateUserDto) {
+  async update(
+    @Param('id') id: number,
+    @Body() updateUserDto: CreateUserDto,
+    @Request() req: any,
+  ) {
     this.logger.log(`Updating user with ID: ${id}`);
-    const user = await this.userService.update(id, updateUserDto);
+    const user = await this.userService.update(id, updateUserDto, req.user);
     if (user) {
       this.logger.log(`User updated with ID: ${id}`);
     } else {

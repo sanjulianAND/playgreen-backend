@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './modules/user/user.module';
@@ -27,9 +27,9 @@ import { AuthModule } from './modules/auth/auth.module';
       inject: [ConfigService],
     }),
     UserModule,
-    TransactionModule,
-    BetModule,
-    UserBetModule,
+    forwardRef(() => TransactionModule),
+    forwardRef(() => BetModule),
+    forwardRef(() => UserBetModule),
     AuthModule,
   ],
 })

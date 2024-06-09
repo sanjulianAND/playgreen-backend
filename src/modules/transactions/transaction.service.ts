@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Transaction } from './entities/transaction.entity';
@@ -20,6 +20,16 @@ export class TransactionService {
     ) {
       throw new Error('user_bet_id is required for bet and winning categories');
     }
+
+    if (createTransactionDto.category === 'withdraw') {
+      const userBalance = await this.calculateBalance(
+        createTransactionDto.user_id,
+      );
+      if (userBalance < createTransactionDto.amount) {
+        throw new BadRequestException('Insufficient balance to withdraw');
+      }
+    }
+
     const transaction = this.transactionRepository.create(createTransactionDto);
     return await this.transactionRepository.save(transaction);
   }

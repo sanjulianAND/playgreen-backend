@@ -54,7 +54,7 @@ export class User {
   city: string;
 
   @Column({ length: 255, nullable: true, default: 'defaultCategory' })
-  category: string; // Definir un valor predeterminado aquí
+  category: string;
 
   @Column({ length: 255, nullable: true })
   document_id: string;
